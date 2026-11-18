@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>अभिभावक अन्तरक्रिया तथा एसईई तयारी कार्यशाला - मनकामना इङ्ग्लिस सेकेन्डरी स्कुल</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --bg-cream: #FAF9F6;
+      --bg-card: #FFFFFF;
+      --primary: #D96B43;
+      --secondary: #1A2E35;
+      --accent: #E29578;
+      --text-dark: #1A2E35;
+      --text-muted: #526369;
+      --border-light: #E6E2D8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans Devanagari', sans-serif;
+      background-color: var(--secondary);
+      color: var(--text-dark);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    /* Progress Bar */
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.15);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      width: 8.33%;
+      transition: width 0.35s ease;
+    }
+
+    /* Slide Viewport */
+    .slides-wrapper {
+      flex: 1;
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: 3rem 4.5rem 5rem 4.5rem;
+      background: var(--bg-cream);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(30px);
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      overflow-y: auto;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+
+    /* Dark Theme Slides (Cover & Closing) */
+    .slide.dark-slide {
+      background: radial-gradient(circle at top right, #233D46 0%, #1A2E35 70%);
+      color: #FAF9F6;
+      text-align: center;
+      align-items: center;
+    }
+
+    .eyebrow {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.4rem;
+    }
+
+    .slide-title {
+      font-size: 2.35rem;
+      font-weight: 800;
+      color: var(--secondary);
+      line-height: 1.25;
+      margin-bottom: 0.4rem;
+    }
+
+    .slide-subtitle {
+      font-size: 1.3rem;
+      color: var(--text-muted);
+      margin-bottom: 1.6rem;
+      border-bottom: 2px solid var(--border-light);
+      padding-bottom: 0.7rem;
+    }
+
+    /* Cover Specific */
+    .school-badge {
+      background: rgba(226, 149, 120, 0.15);
+      color: var(--accent);
+      font-size: 1.15rem;
+      font-weight: 700;
+      padding: 0.45rem 1.5rem;
+      border-radius: 50px;
+      margin-bottom: 1.2rem;
+      border: 1px solid rgba(226, 149, 120, 0.35);
+    }
+
+    .cover-school-name {
+      font-size: 3.1rem;
+      font-weight: 800;
+      color: #FAF9F6;
+      margin-bottom: 0.3rem;
+    }
+
+    .cover-address {
+      font-size: 1.6rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 1.6rem;
+    }
+
+    .cover-topic-box {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 1.5rem 2.5rem;
+      max-width: 880px;
+      margin-bottom: 2rem;
+    }
+
+    .cover-topic-box h1 {
+      font-size: 2.15rem;
+      font-weight: 700;
+      color: #FAF9F6;
+      line-height: 1.35;
+    }
+
+    .cover-meta {
+      display: flex;
+      gap: 2.2rem;
+      font-size: 1.25rem;
+      color: #D0DCE0;
+      font-weight: 600;
+    }
+
+    .cover-meta span {
+      color: #FAF9F6;
+    }
+
+    /* Grids & Cards */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+    }
+
+    .split-layout {
+      display: grid;
+      grid-template-columns: 38% 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: 16px;
+      padding: 1.6rem 1.8rem;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+    }
+
+    .card-dark {
+      background: var(--secondary);
+      color: #FAF9F6;
+      border: none;
+    }
+
+    .card h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 0.6rem;
+    }
+
+    .card-dark h3 {
+      color: var(--accent);
+    }
+
+    .card p {
+      font-size: 1.2rem;
+      line-height: 1.55;
+      color: #3E4E54;
+    }
+
+    .card-dark p {
+      color: #D0DCE0;
+    }
+
+    ul.clean-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      font-size: 1.18rem;
+      line-height: 1.5;
+    }
+
+    /* Table */
+    table.myth-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-card);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+    }
+
+    table.myth-table th {
+      background: var(--secondary);
+      color: #FAF9F6;
+      padding: 1rem 1.5rem;
+      font-size: 1.25rem;
+      text-align: left;
+    }
+
+    table.myth-table td {
+      padding: 1rem 1.5rem;
+      font-size: 1.18rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .step-badge {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--secondary);
+      color: #FAF9F6;
+      font-size: 1.3rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem auto;
+    }
+
+    /* Controls */
+    .controls {
+      position: fixed;
+      bottom: 1rem;
+      left: 0;
+      right: 0;
+      padding: 0 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .slide-counter {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--secondary);
+      background: rgba(255, 255, 255, 0.92);
+      padding: 0.45rem 1.2rem;
+      border-radius: 50px;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 0.7rem;
+    }
+
+    button.nav-btn {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--border-light);
+      color: var(--secondary);
+      font-family: 'Noto Sans Devanagari', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 0.5rem 1.3rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    button.nav-btn:hover:not(:disabled) {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    button.nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 1024px) {
+      .slide { padding: 2rem 2rem 5rem 2rem; justify-content: flex-start; }
+      .grid-2, .grid-3, .grid-4, .split-layout { grid-template-columns: 1fr; }
+      .cover-school-name { font-size: 2.2rem; }
+      .cover-topic-box h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="progress-bar-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <div class="slides-wrapper">
+
+    <!-- SLIDE 1: COVER SLIDE -->
+    <section class="slide dark-slide active">
+      <div class="school-badge">✨ एसईई परीक्षा २०८३ • विशेष अभिभावक अन्तरक्रिया</div>
+      <div class="cover-school-name">मनकामना इङ्ग्लिस सेकेन्डरी स्कुल</div>
+      <div class="cover-address">भक्तपुर–१०</div>
+      <div class="cover-topic-box">
+        <h1>अतिरिक्त कक्षा सञ्चालन सम्बन्धी आवश्यक छलफल</h1>
+      </div>
+      <div class="cover-meta">
+        <div>📅 मिति: <span>२०८३ मङ्सिर ६ गते</span></div>
+        <div>🎯 लक्षित समूह: <span>कक्षा १० का अभिभावकज्यूहरू</span></div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: CORE PURPOSE -->
+    <section class="slide">
+      <div class="eyebrow">१. कार्यक्रमको मूल मर्म र त्रिपक्षीय सहकार्य</div>
+      <h2 class="slide-title">निर्देशन होइन, साझा संकल्प र त्रिपक्षीय सहकार्य</h2>
+      <p class="slide-subtitle">विद्यार्थी, अभिभावक र विद्यालयको साझा भूमिका</p>
+      <div class="grid-3">
+        <div class="card">
+          <i class="fa-solid fa-handshake-simple" style="font-size:2rem;color:#D96B43;margin-bottom:0.8rem;display:block;"></i>
+          <h3>दोषारोपणको अन्त्य</h3>
+          <p>एक–अर्कालाई दोष नदिई समाधान खोज्ने साझा मञ्च।</p>
+        </div>
+        <div class="card">
+          <i class="fa-solid fa-people-group" style="font-size:2rem;color:#1A2E35;margin-bottom:0.8rem;display:block;"></i>
+          <h3>त्रिपक्षीय उत्तरदायित्व</h3>
+          <p>विद्यालय, अभिभावक र विद्यार्थीको समान सहकार्य।</p>
+        </div>
+        <div class="card">
+          <i class="fa-solid fa-seedling" style="font-size:2rem;color:#D96B43;margin-bottom:0.8rem;display:block;"></i>
+          <h3>क्षमताको प्रस्फुटन</h3>
+          <p>लुकेको प्रतिभा बाहिर ल्याउने सामूहिक प्रयास।</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: WHY EXTRA CLASSES ARE ESSENTIAL -->
+    <section class="slide">
+      <div class="eyebrow">अतिरिक्त कक्षाको अपरिहार्यता • मुख्य यथार्थ</div>
+      <h2 class="slide-title">अतिरिक्त कक्षा किन अनिवार्य भयो?</h2>
+      <p class="slide-subtitle">कक्षामा सुन्ने तर परीक्षामा लेख्न नसक्ने र भोलिपल्टै बिर्सने गम्भीर चुनौतीको समाधान</p>
+      <div class="grid-2">
+        <div class="card">
+          <h3><i class="fa-solid fa-mobile-screen-button" style="color:#D96B43;margin-right:8px;"></i>१. डिजिटल कुलत र एकाग्रता भङ्ग</h3>
+          <ul class="clean-list">
+            <li><b>डिजिटल डिस्ट्र्याक्सन:</b> मोबाइल, टिकटक र गेमले मस्तिष्कको ध्यान भङ्ग।</li>
+            <li><b>एकाग्रता पुनर्निर्माण:</b> कमजोर सिकाइ क्षमतालाई पुनः ट्र्याकमा ल्याउन आवश्यक।</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3><i class="fa-solid fa-brain" style="color:#1A2E35;margin-right:8px;"></i>२. पारिवारिक तनाव र स्मरण शक्ति</h3>
+          <ul class="clean-list">
+            <li><b>अनिद्रा र पोषण अभाव:</b> तनावपूर्ण वातावरणले दीर्घकालीन स्मरण शक्ति कमजोर।</li>
+            <li><b>सिकाइ खाडल (Learning Gap):</b> मस्तिष्कमा ज्ञान नटिक्ने समस्या पुर्न अनिवार्य।</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3><i class="fa-solid fa-users-viewfinder" style="color:#1A2E35;margin-right:8px;"></i>३. व्यक्तिगत भिन्नताको सम्बोधन</h3>
+          <ul class="clean-list">
+            <li><b>सिकाइ गतिमा फरक:</b> नियमित ५–६ घण्टा सुस्त सिकारुका लागि अपर्याप्त।</li>
+            <li><b>विशेष हेरचाह:</b> कमजोरी लुकाउने विद्यार्थीलाई मुख्य धारमा ल्याउन।</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3><i class="fa-solid fa-rotate-right" style="color:#D96B43;margin-right:8px;"></i>४. घरमा पुनरावृत्ति (Revision) अभाव</h3>
+          <ul class="clean-list">
+            <li><b>स्टडी आवरको कमी:</b> घरमा निगरानी नहुँदा पढाइ विद्यालयमै सीमित।</li>
+            <li><b>स्थायी सिकाइ:</b> बारम्बार अभ्यास गराई परीक्षामा लेख्न सक्षम बनाउन।</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: SCHEDULE & MEALS -->
+    <section class="slide">
+      <div class="eyebrow">२. अतिरिक्त कक्षा तथा भोजन व्यवस्थापन</div>
+      <h2 class="slide-title">नियमितबाहेक ६ अतिरिक्त कक्षा र ४ पटक भोजन</h2>
+      <p class="slide-subtitle">बिहान ६:०० देखि बेलुका ७:०० बजेसम्मको विशेष कार्यतालिका</p>
+      <div class="grid-3">
+        <div class="card card-dark">
+          <div style="color:#E29578;font-weight:700;margin-bottom:0.4rem;">बिहान ६:०० – १०:००</div>
+          <h3>प्रभातकालीन कक्षा र भोजन</h3>
+          <p>बिहानी खाजा, अतिरिक्त कक्षा र ८:३० बजे खाना।</p>
+        </div>
+        <div class="card">
+          <div style="color:#D96B43;font-weight:700;margin-bottom:0.4rem;">बिहान १०:०० – ४:००</div>
+          <h3>नियमित कक्षा र दिउँसो खाजा</h3>
+          <p>नियमित विषयगत शिक्षण र दिउँसोको खाजा व्यवस्था।</p>
+        </div>
+        <div class="card card-dark">
+          <div style="color:#E29578;font-weight:700;margin-bottom:0.4rem;">साँझ ४:०० – ७:००</div>
+          <h3>साँझको खाजा र थप कक्षा</h3>
+          <p>४–५ बीच फेरि खाजा र ६ अतिरिक्त कक्षाको पूर्णता।</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: PARENT AWARENESS & RESPONSIBILITIES -->
+    <section class="slide">
+      <div class="eyebrow">२. अभिभावकहरू सचेत हुनुपर्ने विषय र जिम्मेवारी</div>
+      <h2 class="slide-title">यातायात व्यवस्थापन र अभिभावकको सक्रिय भूमिका</h2>
+      <p class="slide-subtitle">अतिरिक्त कक्षा सफल पार्न विद्यालय र अभिभावकबीचको स्पष्ट समझदारी</p>
+      <div class="grid-2">
+        <div class="card card-dark">
+          <h3><i class="fa-solid fa-route" style="margin-right:8px;"></i>समय र यातायात जिम्मेवारी</h3>
+          <ul class="clean-list" style="color:#FAF9F6;">
+            <li><b>आवागमनको जिम्मा:</b> बिहान समयमै पुर्‍याउने र बेलुका लिन आउने जिम्मेवारी अभिभावकको हुनेछ।</li>
+            <li><b>यातायात व्यवस्था:</b> अतिरिक्त समयका लागि विद्यालयले यातायात उपलब्ध गराउन सक्ने छैन।</li>
+            <li><b>नियमित उपस्थिति:</b> एक दिन पनि कक्षा नछुटाई समयपालन गराउने दायित्व।</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3><i class="fa-solid fa-hand-holding-heart" style="color:#D96B43;margin-right:8px;"></i>अभिभावकसँग विशेष अपेक्षा</h3>
+          <ul class="clean-list">
+            <li><b>हौसला र प्रेरणा:</b> थकान महसुस हुन नदिन निरन्तर ऊर्जा र सकारात्मक प्रेरणा प्रदान गर्ने।</li>
+            <li><b>घरको शान्त वातावरण:</b> बेलुका घर फर्किएपछि अनावश्यक तनाव र घरायसी बोझ नदिने।</li>
+            <li><b>पर्याप्त विश्राम र निद्रा:</b> भोलिपल्ट बिहान ६ बजे ताजा भएर आउन समयमै सुत्ने व्यवस्था मिलाउने।</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: INDIVIDUAL DIFFERENCES -->
+    <section class="slide">
+      <div class="eyebrow">३. व्यक्तिगत भिन्नता र अत्यधिक अपेक्षाको जोखिम</div>
+      <h2 class="slide-title">विद्यार्थी कारखानाका उत्पादन होइनन्</h2>
+      <p class="slide-subtitle">व्यक्तिगत भिन्नताको सिद्धान्त र तुलनाको असर</p>
+      <div class="split-layout">
+        <div class="card" style="background:#EFECE6;padding:2.2rem;">
+          <i class="fa-solid fa-quote-left" style="font-size:2rem;color:#D96B43;margin-bottom:0.8rem;display:block;"></i>
+          <p style="font-size:1.45rem;font-weight:700;color:#1A2E35;line-height:1.45;">
+            “हरेक फूलको आफ्नै सुगन्ध र फुल्ने समय हुन्छ; सबैलाई एउटै साँचोमा ढाल्न सकिँदैन।”
+          </p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div class="card">
+            <h3>प्रत्येक बालबालिका अद्वितीय छन्</h3>
+            <p>कसैको गणित तेज हुन्छ त कसैको भाषा, कला वा प्रविधि।</p>
+          </div>
+          <div class="card">
+            <h3>तुलनाले आत्मविश्वास मार्छ</h3>
+            <p>साथी वा छिमेकीसँगको तुलनाले हीनताबोध र तनाव जन्माउँछ।</p>
+          </div>
+          <div class="card">
+            <h3 style="color:#D96B43;">अत्यधिक अपेक्षाको खतरा</h3>
+            <p>क्षमताभन्दा बढी दबाबले पढाइप्रति वितृष्णा र विद्रोह निम्त्याउँछ।</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: BITTER TRUTH INSIDE SCHOOL -->
+    <section class="slide">
+      <div class="eyebrow">विद्यालयभित्रको यथार्थ</div>
+      <h2 class="slide-title">शिक्षक उपलब्ध हुँदाहुँदै पनि सिकाइ किन हुँदैन?</h2>
+      <p class="slide-subtitle">शिक्षा टाउकोमा कोचिदिने वस्तु होइन, विद्यार्थीको सक्रिय सहभागितामा निर्भर हुन्छ</p>
+      <div class="split-layout">
+        <div class="card card-dark" style="padding:2.2rem;">
+          <i class="fa-solid fa-lightbulb" style="font-size:2rem;color:#E29578;margin-bottom:0.8rem;display:block;"></i>
+          <p style="font-size:1.4rem;font-weight:700;color:#FAF9F6;line-height:1.45;">
+            “शिक्षकले घोडालाई तलाउमा लैजान सक्छन्, तर पानी पिउन बाध्य पार्न सक्दैनन्।”
+          </p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.8rem;">
+          <div class="card" style="padding:1.1rem 1.5rem;">
+            <h3 style="font-size:1.2rem;margin-bottom:0.2rem;">१. सोध्ने बानीको अभाव र संकोच</h3>
+            <p style="font-size:1.1rem;">नबुझे पनि अरूले के सोच्लान् भन्ने डरले प्रश्न सोध्न हिचकिचाउने बानी।</p>
+          </div>
+          <div class="card" style="padding:1.1rem 1.5rem;">
+            <h3 style="font-size:1.2rem;margin-bottom:0.2rem;">२. निष्क्रिय श्रोता बन्ने प्रवृत्ति</h3>
+            <p style="font-size:1.1rem;">शारीरिक उपस्थिति तर मानसिक अनुपस्थितिले मस्तिष्कमा ज्ञान नबस्ने समस्या।</p>
+          </div>
+          <div class="card" style="padding:1.1rem 1.5rem;">
+            <h3 style="font-size:1.2rem;margin-bottom:0.2rem;">३. आन्तरिक प्रेरणाको कमी</h3>
+            <p style="font-size:1.1rem;">सिक्नुपर्छ भन्ने भित्री चेतनाभन्दा समय काट्ने मानसिकता हाबी हुनु।</p>
+          </div>
+          <div class="card" style="padding:1.1rem 1.5rem;">
+            <h3 style="font-size:1.2rem;margin-bottom:0.2rem;color:#D96B43;">४. विद्यालय र घरबीचको विच्छेद</h3>
+            <p style="font-size:1.1rem;">गेट नाघेपछि किताब थन्क्याउने र घरमा अभ्यास नगर्दा २४ घण्टामै बिर्सने रोग।</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: ADOLESCENT PSYCHOLOGY -->
+    <section class="slide">
+      <div class="eyebrow">४. किशोरावस्थाको मनोविज्ञान र विज्ञान–प्रविधिको युग</div>
+      <h2 class="slide-title">आजका किशोरकिशोरीको मनस्थिति र डिजिटल युगको प्रभाव</h2>
+      <p class="slide-subtitle">बदलिँदो समयअनुसार अभिभावकको व्यवहार परिवर्तन</p>
+      <div class="grid-3">
+        <div class="card">
+          <i class="fa-solid fa-heart-pulse" style="font-size:2rem;color:#D96B43;margin-bottom:0.8rem;display:block;"></i>
+          <h3>संवेगात्मक संवेदनशीलता</h3>
+          <p>शारीरिक र मानसिक परिवर्तनले छिट्टै रिसाउने वा निराश हुने स्वभाव।</p>
+        </div>
+        <div class="card">
+          <i class="fa-solid fa-microchip" style="font-size:2rem;color:#1A2E35;margin-bottom:0.8rem;display:block;"></i>
+          <h3>विज्ञान र प्रविधिको विश्व</h3>
+          <p>एआई र इन्टरनेटको युगमा घोकन्ते रटानभन्दा सिर्जनशील बुझाइ आवश्यक।</p>
+        </div>
+        <div class="card">
+          <i class="fa-solid fa-comments" style="font-size:2rem;color:#D96B43;margin-bottom:0.8rem;display:block;"></i>
+          <h3>आत्मसम्मानको खोजी</h3>
+          <p>कठोर आदेशभन्दा तर्क, सम्मानजनक संवाद र मित्रवत् साथ प्रभावकारी।</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9: TEACHING PROCESS -->
+    <section class="slide">
+      <div class="eyebrow">५. आधुनिक शिक्षण प्रक्रिया र सिद्धान्त</div>
+      <h2 class="slide-title">विद्यालयमा सिकाइ कसरी अगाडि बढिरहेको छ?</h2>
+      <p class="slide-subtitle">वैज्ञानिक शिक्षण विधि र निरन्तर सुधार चक्र</p>
+      <div class="grid-4">
+        <div class="card" style="text-align:center;">
+          <div class="step-badge">१</div>
+          <h3>स्तरीकरण पहिचान</h3>
+          <p>सिकाइ गति, रुचि र कमजोर क्षेत्रको पहिचान।</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div class="step-badge">२</div>
+          <h3>बालकेन्द्रित सिकाइ</h3>
+          <p>घोकन्ते विद्या होइन, अवधारणा र प्रयोगात्मक अभ्यास।</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div class="step-badge">३</div>
+          <h3>निरन्तर मूल्याङ्कन</h3>
+          <p>साप्ताहिक परीक्षा र उत्तरपुस्तिकाको विश्लेषण।</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div class="step-badge" style="background:#D96B43;">४</div>
+          <h3>उपचारात्मक शिक्षण</h3>
+          <p>कमजोर विषयमा विशेष समूह बनाई पुनः शिक्षण।</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: MYTHS VS REALITY -->
+    <section class="slide">
+      <div class="eyebrow">६. अभिभावकका प्रचलित भ्रम र शैक्षिक यथार्थ</div>
+      <h2 class="slide-title">भ्रम निवारण र यथार्थ बोध</h2>
+      <p class="slide-subtitle">गलत बुझाइ त्यागी सही दृष्टिकोण अपनाऔँ</p>
+      <table class="myth-table">
+        <thead>
+          <tr>
+            <th style="width:46%;">प्रचलित भ्रम (गलत बुझाइ)</th>
+            <th style="width:54%;">शैक्षिक यथार्थ (सही दृष्टिकोण)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:#D96B43;font-weight:700;">भ्रम १: पढाइ सुधार्ने जिम्मा विद्यालयको मात्र हो।</td>
+            <td>विद्यार्थीले ७०% समय घरमै बिताउँछन्; घर नै पहिलो पाठशाला हो।</td>
+          </tr>
+          <tr>
+            <td style="color:#D96B43;font-weight:700;">भ्रम २: गाली र त्रास देखाएपछि मात्र पढ्छन्।</td>
+            <td>डरले अस्थायी रटान गराउँछ; प्रेम र विश्वासले दीर्घकालीन सिकाइ दिन्छ।</td>
+          </tr>
+          <tr>
+            <td style="color:#D96B43;font-weight:700;">भ्रम ३: सबैले ४.० जीपीए ल्याउनै पर्छ।</td>
+            <td>अंकभन्दा सीप, अनुशासन, नैतिकता र व्यक्तिगत क्षमता प्रमुख हो।</td>
+          </tr>
+          <tr>
+            <td style="color:#D96B43;font-weight:700;">भ्रम ४: मोबाइल पूरै खोसेपछि समस्या समाधान हुन्छ।</td>
+            <td>खोस्नुभन्दा अभिभावकको निगरानीमा प्रविधिको सदुपयोग सिकाउनुपर्छ।</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- SLIDE 11: 5 PRACTICAL TIPS -->
+    <section class="slide">
+      <div class="eyebrow">७. घरको सकारात्मक वातावरण र साझा प्रतिबद्धता</div>
+      <h2 class="slide-title">भोलिदेखि नै लागू गर्ने ५ सरल व्यवहार</h2>
+      <p class="slide-subtitle">अभिभावकले घरमा अपनाउनुपर्ने व्यावहारिक सूत्रहरू</p>
+      <div style="display:flex;flex-direction:column;gap:0.85rem;">
+        <div class="card" style="padding:1rem 1.6rem;">
+          <p><b style="color:#D96B43;">१. शान्त अध्ययन कुना:</b> घरमा टिभी र मोबाइलको आवाजमुक्त पढ्ने वातावरण बनाउने।</p>
+        </div>
+        <div class="card" style="padding:1rem 1.6rem;">
+          <p><b style="color:#D96B43;">२. दैनिक १५ मिनेट संवाद:</b> गाली नगरी “आज विद्यालयमा के नयाँ सिक्यौ?” भनी मायालु सोधपुछ गर्ने।</p>
+        </div>
+        <div class="card" style="padding:1rem 1.6rem;">
+          <p><b style="color:#D96B43;">३. पोषण र निद्राको सन्तुलन:</b> कम्तीमा ७ घण्टा मस्त निद्रा र समयमै पौष्टिक भोजन सुनिश्चित गर्ने।</p>
+        </div>
+        <div class="card" style="padding:1rem 1.6rem;">
+          <p><b style="color:#D96B43;">४. सानो प्रगतिको प्रशंसा:</b> कमजोरी कोट्याउनुअघि सानो सुधारको खुलेर तारिफ गर्ने।</p>
+        </div>
+        <div class="card" style="padding:1rem 1.6rem;">
+          <p><b style="color:#D96B43;">५. विद्यालयसँग नियमित सम्पर्क:</b> गुनासो मनमा नराखी कक्षा शिक्षकसँग प्रत्यक्ष संवाद गर्ने।</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 12: CLOSING & Q&A -->
+    <section class="slide dark-slide">
+      <div class="school-badge">प्रश्न उत्तर तथा खुला सत्र • साझा निर्णय</div>
+      <h2 style="font-size:2.5rem;font-weight:800;color:#FAF9F6;max-width:920px;line-height:1.35;margin-bottom:1.2rem;">
+        “अन्तमा, यस विषयमा यहाँहरूका कुनै जिज्ञासा, सल्लाह वा सुझाव छन् भने राख्न सक्नुहुन्छ।”
+      </h2>
+      <p style="font-size:1.35rem;color:#D0DCE0;max-width:780px;margin-bottom:2rem;">
+        हामी सबैको साझा प्रयासले नै प्रत्येक विद्यार्थीको अन्तर्निहित प्रतिभा प्रस्फुटन हुनेछ।
+      </p>
+      <div class="cover-meta">
+        <div>💬 खुला सत्र</div>
+        <div>🙏 हार्दिक धन्यवाद!</div>
+        <div>🏫 मनकामना इङ्ग्लिस सेकेन्डरी स्कुल</div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Navigation Controls -->
+  <div class="controls">
+    <div class="slide-counter" id="slideCounter">स्लाइड १ / १२</div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">⬅ अघिल्लो</button>
+      <button class="nav-btn" onclick="toggleFullScreen()">⛶ फुल स्क्रिन</button>
+      <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">अर्को ➡</button>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const progressBar = document.getElementById('progressBar');
+    const slideCounter = document.getElementById('slideCounter');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    const nepaliDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
+    function toNepaliNumber(num) {
+      return num.toString().split('').map(d => nepaliDigits[d] || d).join('');
+    }
+
+    function updateSlide() {
+      slides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === currentSlide);
+      });
+
+      const progress = ((currentSlide + 1) / slides.length) * 100;
+      progressBar.style.width = `${progress}%`;
+      slideCounter.textContent = `स्लाइड ${toNepaliNumber(currentSlide + 1)} / ${toNepaliNumber(slides.length)}`;
+
+      prevBtn.disabled = currentSlide === 0;
+      nextBtn.disabled = currentSlide === slides.length - 1;
+    }
+
+    function changeSlide(direction) {
+      const nextIndex = currentSlide + direction;
+      if (nextIndex >= 0 && nextIndex < slides.length) {
+        currentSlide = nextIndex;
+        updateSlide();
+      }
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        changeSlide(1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        changeSlide(-1);
+      } else if (e.key.toLowerCase() === 'f') {
+        toggleFullScreen();
+      }
+    });
+
+    updateSlide();
+  </script>
+</body>
+</html>
